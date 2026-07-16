@@ -1,0 +1,87 @@
+<div class="container">
+  <header>
+    <h1>⚙️ Gerenciar Cursos e Turmas</h1>
+    <p class="subtitulo">Cadastre os cursos e as turmas de cada um. Depois, selecione uma turma no menu à esquerda para sortear.</p>
+  </header>
+
+  @if (erro()) {
+    <div class="alerta-erro">
+      ⚠️ {{ erro() }}
+      <button (click)="erro.set('')">✕</button>
+    </div>
+  }
+
+  <!-- ════════════ CURSOS ════════════ -->
+  <section class="card">
+    <h2>📚 Cursos</h2>
+
+    <div class="input-grupo">
+      <input
+        type="text"
+        [value]="novoNomeCurso()"
+        (input)="novoNomeCurso.set($any($event.target).value)"
+        placeholder="Nome do curso (ex: Informática)..."
+        (keyup.enter)="adicionarCurso()"
+        class="input-texto"
+      />
+      <button (click)="adicionarCurso()" class="btn btn-primario">+ Adicionar Curso</button>
+    </div>
+
+    <div class="lista-itens">
+      @for (curso of cursos(); track curso.id) {
+        <div class="item-card">
+          <span>{{ curso.nome }}</span>
+          <button (click)="removerCurso(curso.id)" class="btn btn-perigo btn-pequeno">🗑 Remover</button>
+        </div>
+      }
+      @if (cursos().length === 0) {
+        <p class="vazio">Nenhum curso cadastrado ainda.</p>
+      }
+    </div>
+  </section>
+
+  <!-- ════════════ TURMAS ════════════ -->
+  <section class="card">
+    <h2>🏷 Turmas</h2>
+
+    <div class="input-grupo">
+      <select
+        [value]="cursoSelecionadoId()"
+        (change)="trocadeCurso($any($event.target).value)"
+        (load)="trocadeCurso($any($event.target).value)"
+        class="input-texto"
+      >
+        <option [value]="null" readonly selected>Selecione um curso...</option>
+        @for (curso of cursos(); track curso.id) {
+          <option [value]="curso.id">{{ curso.nome }}</option>
+        }
+      </select>
+      <input
+        type="text"
+        [value]="novoNomeTurma()"
+        (input)="novoNomeTurma.set($any($event.target).value)"
+        placeholder="Nome da turma (ex: 2ºA - Manhã)..."
+        (keyup.enter)="adicionarTurma()"
+        class="input-texto"
+      />
+      <button (click)="adicionarTurma()" class="btn btn-primario">+ Adicionar Turma</button>
+    </div>
+
+    @for (curso of cursos(); track curso.id) {
+      <div class="grupo-curso">
+        <p class="nome-curso-grupo">{{ curso.nome }}</p>
+        <div class="lista-itens">
+          @for (turma of turmasDoCurso(curso.id); track turma.id) {
+            <div class="item-card">
+              <a [routerLink]="['/turma', turma.id]" class="link-turma-admin">📋 {{ turma.nome }}</a>
+              <button (click)="removerTurma(turma.id)" class="btn btn-perigo btn-pequeno">🗑 Remover</button>
+            </div>
+          }
+          @if (turmasDoCurso(curso.id).length === 0) {
+            <p class="vazio">Nenhuma turma neste curso ainda.</p>
+          }
+        </div>
+      </div>
+    }
+  </section>
+</div>

@@ -1,0 +1,178 @@
+<div class="container">
+  <header>
+    <h1>📋 {{ turma()?.nome ?? 'Carregando...' }}</h1>
+    <p class="subtitulo">
+      {{ turma()?.curso_nome }} · Ciclo atual: {{ statusFila()?.ciclo_atual ?? '-' }}
+    </p>
+  </header>
+
+  @if (erro()) {
+    <div class="alerta-erro">
+      ⚠️ {{ erro() }}
+      <button (click)="erro.set('')">✕</button>
+    </div>
+  }
+
+  <!-- ════════════ ABAS ════════════ -->
+  <div class="abas">
+    <button class="aba" [class.ativa]="abaAtiva() === 'sortear'" (click)="mudarAba('sortear')">🎲 Sortear</button>
+    <button class="aba" [class.ativa]="abaAtiva() === 'alunos'" (click)="mudarAba('alunos')">👥 Alunos</button>
+    <button class="aba" [class.ativa]="abaAtiva() === 'historico'" (click)="mudarAba('historico')">🗒 Histórico</button>
+  </div>
+
+  <!-- ════════════ ABA: SORTEAR ════════════ -->
+@if (abaAtiva() === 'sortear') {
+
+  <!-- Sub-toggle: tela dos alunos | tela do professor -->
+  <div class="sub-abas">
+    <button
+      class="sub-aba"
+      [class.ativa]="subAbaSortear() === 'sorteio'"
+      (click)="subAbaSortear.set('sorteio')"
+    >🎲 Sorteio</button>
+    <button style=""
+      class="sub-aba"
+      [class.ativa]="subAbaSortear() === 'controle'"
+      (click)="subAbaSortear.set('controle')"
+    >⚙️ Controle</button>
+  </div>
+
+  <!-- ── Tela pública: só o botão e o resultado ── -->
+  @if (subAbaSortear() === 'sorteio') {
+    <section class="card card-sorteio-publico">
+      <button (click)="iniciarSorteio()" class="btn btn-primario btn-grande" [disabled]="alunos().length < 2 || contagemRegressiva() !== null">
+        🎲 Sortear 2 alunos
+      </button>
+
+      @if (alunos().length === 0) {
+        <p class="vazio" style="margin-top: 1rem;">Cadastre alunos na aba "Alunos" primeiro.</p>
+      }
+
+      @if (contagemRegressiva() !== null) {
+        <div class="contagem-regressiva">
+          @for (n of [contagemRegressiva()]; track n) {
+            <span class="numero-contagem">{{ n }}</span>
+          }
+        </div>
+      }
+
+      @if (resultadoSorteio()) {
+        <div class="resultado-sorteio">
+          <p class="resultado-titulo">Sorteados de hoje:</p>
+          <p class="resultado-nomes">
+            @for (nome of resultadoSorteio()!.sorteados; track nome) {
+              <span class="chip-sorteado">{{ nome }}</span>
+            }
+          </p>
+          @if (resultadoSorteio()!.reiniciado) {
+            <p class="aviso-ciclo">🔄 Ciclo reiniciado! Todos voltaram a ser elegíveis (ciclo {{ resultadoSorteio()!.ciclo }}).</p>
+          }
+        </div>
+      }
+    </section>
+  }
+
+  <!-- ── Tela do professor: faltantes + fila ── -->
+  @if (subAbaSortear() === 'controle') {
+    <section class="card">
+      <h2>🙅 Marcar faltantes</h2>
+      <p class="ajuda">Quem estiver marcado não entra no sorteio hoje, mas mantém sua posição na fila.</p>
+
+      <div class="lista-checkbox">
+        @for (aluno of alunos(); track aluno.id) {
+          <label class="item-checkbox">
+            <input
+              type="checkbox"
+              [checked]="estaAusente(aluno.id)"
+              (change)="alternarAusente(aluno.id)"
+            />
+            <span>{{ aluno.nome }}</span>
+          </label>
+        }
+        @if (alunos().length === 0) {
+          <p class="vazio">Nenhum aluno cadastrado.</p>
+        }
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>📋 Fila da rodada (ciclo {{ statusFila()?.ciclo_atual ?? '-' }})</h2>
+      <p class="ajuda">Quem já foi sorteado neste ciclo fica esmaecido — só volta no próximo.</p>
+
+      <div class="lista-fila">
+        @for (a of statusFila()?.alunos ?? []; track a.id) {
+          <span class="chip-fila" [class.ja-sorteado]="a.ja_sorteado_ciclo">
+            {{ a.nome }} {{ a.ja_sorteado_ciclo ? '✔' : '' }}
+          </span>
+        }
+      </div>
+    </section>
+  }
+}
+
+  <!-- ════════════ ABA: ALUNOS ════════════ -->
+  @if (abaAtiva() === 'alunos') {
+    <section class="card">
+      <h2>👥 Alunos desta turma</h2>
+
+      <div class="input-grupo">
+        <input
+          type="text"
+          [value]="novoNomeAluno()"
+          (input)="novoNomeAluno.set($any($event.target).value)"
+          placeholder="Nome do novo aluno... (ou separados por vírgula)"
+          (keyup.enter)="adicionarAluno()"
+          class="input-texto"
+        />
+        <button (click)="adicionarAluno()" class="btn btn-primario">+ Adicionar</button>
+      </div>
+
+      <div class="ajuda-multiplos">
+        <p class="ajuda">💡 Dica: separe vários alunos por vírgula (ex: "João, Maria, Pedro") para adicionar múltiplos de uma vez.</p>
+      </div>
+      
+
+      <div class="lista-alunos">
+        @for (aluno of alunos(); track aluno.id) {
+          <div class="aluno-card">
+            <span>{{ aluno.nome }}</span>
+            <button (click)="removerAluno(aluno.id)" class="btn btn-perigo btn-pequeno">🗑 Remover</button>
+          </div>
+        }
+        @if (alunos().length === 0) {
+          <p class="vazio">Nenhum aluno cadastrado ainda.</p>
+        }
+      </div>
+    </section>
+  }
+
+  <!-- ════════════ ABA: HISTÓRICO ════════════ -->
+  @if (abaAtiva() === 'historico') {
+    <section class="card">
+      <h2>🗒 Histórico de sorteios</h2>
+
+      @if (historico().length === 0) {
+        <p class="vazio">Nenhum sorteio realizado ainda nesta turma.</p>
+      } @else {
+        <table class="tabela-historico">
+          <thead>
+            <tr>
+              <th>Aluno</th>
+              <th>Ciclo</th>
+              <th>Data</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of historico(); track item.id) {
+              <tr>
+                <td>{{ item.aluno_nome }}</td>
+                <td>{{ item.ciclo }}</td>
+                <td>{{ formatarData(item.data_sorteio) }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </section>
+  }
+</div>

@@ -1,0 +1,63 @@
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  background: #1a1a2e;
+  color: #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  padding: 1.25rem 1.25rem 0.75rem;
+}
+
+.sidebar-header h1 {
+  font-size: 1.2rem;
+  color: white;
+}
+
+.link-gerenciar {
+  display: block;
+  padding: 0.75rem 1.25rem;
+  color: #a5b4fc;
+  text-decoration: none;
+  font-size: 0.875rem;
+  border-bottom: 1px solid #2d2d4a;
+  margin-bottom: 0.5rem;
+}
+.link-gerenciar:hover { background: #25253f; }
+.link-gerenciar.ativo { background: #312e81; color: white; }
+
+.lista-cursos { padding: 0 0.75rem 1.5rem; }
+
+.grupo-curso { margin-bottom: 1rem; }
+
+.nome-curso {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #818cf8;
+  padding: 0.5rem 0.5rem 0.25rem;
+}
+
+.link-turma {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  margin-bottom: 2px;
+}
+.link-turma:hover { background: #25253f; }
+.link-turma.ativo { background: #4f46e5; color: white; }
+
+.sem-turmas {
+  font-size: 0.8rem;
+  color: #6b7280;
+  padding: 0.25rem 0.75rem;
+}

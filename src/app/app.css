@@ -1,0 +1,9 @@
+:host {
+  display: block;
+}
+
+.conteudo {
+  margin-left: 260px; /* largura da sidebar fixa */
+  min-height: 100vh;
+  background: #f0f2f5;
+}

@@ -1,0 +1,35 @@
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <h1>🧹 Limpeza</h1>
+  </div>
+
+  <a routerLink="/" routerLinkActive="ativo" [routerLinkActiveOptions]="{exact: true}" class="link-gerenciar">
+    ⚙️ Gerenciar cursos e turmas
+  </a>
+
+  <div class="lista-cursos">
+    @for (curso of cursos(); track curso.id) {
+      <div class="grupo-curso">
+        <p class="nome-curso">{{ curso.nome }}</p>
+
+        @for (turma of turmasDoCurso(curso.id); track turma.id) {
+          <a
+            [routerLink]="['/turma', turma.id]"
+            routerLinkActive="ativo"
+            class="link-turma"
+          >
+            📋 {{ turma.nome }}
+          </a>
+        }
+
+        @if (turmasDoCurso(curso.id).length === 0) {
+          <p class="sem-turmas">Nenhuma turma ainda</p>
+        }
+      </div>
+    }
+
+    @if (cursos().length === 0) {
+      <p class="sem-turmas">Cadastre um curso para começar</p>
+    }
+  </div>
+</nav>

@@ -1,0 +1,89 @@
+* { box-sizing: border-box; }
+
+.container {
+  max-width: 750px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+}
+
+header { margin-bottom: 1.5rem; }
+header h1 { font-size: 1.6rem; color: #1a1a2e; }
+.subtitulo { color: #666; margin-top: 0.4rem; font-size: 0.9rem; }
+
+.alerta-erro {
+  background: #fee2e2;
+  border: 1px solid #f87171;
+  color: #b91c1c;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.alerta-erro button { background: none; border: none; cursor: pointer; color: #b91c1c; font-size: 1rem; }
+
+.card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom: 1.5rem;
+}
+.card h2 { font-size: 1.1rem; color: #1a1a2e; margin-bottom: 1rem; }
+
+.input-grupo { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+
+.input-texto {
+  flex: 1;
+  min-width: 160px;
+  padding: 0.625rem 0.875rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+}
+.input-texto:focus { border-color: #6366f1; }
+
+.btn {
+  padding: 0.625rem 1.125rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.btn:hover { opacity: 0.85; }
+
+.btn-primario { background: #6366f1; color: white; }
+.btn-perigo   { background: #ef4444; color: white; }
+.btn-pequeno  { padding: 0.4rem 0.75rem; font-size: 0.8rem; }
+
+.lista-itens { display: flex; flex-direction: column; gap: 0.5rem; }
+.vazio { color: #9ca3af; padding: 0.5rem 0; font-size: 0.875rem; }
+
+.item-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9fafb;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+}
+
+.grupo-curso { margin-bottom: 1.25rem; }
+.nome-curso-grupo {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6366f1;
+  margin-bottom: 0.5rem;
+}
+
+.link-turma-admin {
+  color: #1a1a2e;
+  text-decoration: none;
+  font-weight: 500;
+}
+.link-turma-admin:hover { text-decoration: underline; }
