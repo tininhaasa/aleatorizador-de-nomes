@@ -18,7 +18,7 @@ import { Curso } from '../models/curso';
   providedIn: 'root'
 })
 export class CursoService {
-  private apiUrl = 'http://localhost:3000/api/cursos';
+  private apiUrl = 'https://aleatorizador-de-nomes-backend-three.onrender.com/api/cursos';
 
   // Incrementado a cada criação/remoção — sinaliza "algo mudou" para quem observa
   versao = signal(0);
