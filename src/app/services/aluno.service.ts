@@ -13,7 +13,7 @@ import { Aluno } from '../models/aluno';
 
 
 export class AlunoService {
-  private apiUrl = 'https://aleatorizador-de-nomes-backend-three.onrender.com/api/alunos';
+  private apiUrl = 'https://aleatorizador-de-nomes-backend.onrender.com/api/alunos';
 
   constructor(private http: HttpClient) {}
 
