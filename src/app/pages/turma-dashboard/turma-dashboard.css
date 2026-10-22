@@ -23,6 +23,32 @@ header h1 { font-size: 1.6rem; color: #1a1a2e; }
 }
 .alerta-erro button { background: none; border: none; cursor: pointer; color: #b91c1c; font-size: 1rem; }
 
+/* Sub-abas (dentro da aba Sortear) */
+.sub-abas {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.sub-aba {
+  background: #e0e7ff;
+  border: none;
+  padding: 0.5rem 1.1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #3730a3;
+  cursor: pointer;
+}
+.sub-aba:hover { background: #c7d2fe; }
+.sub-aba.ativa { background: #4f46e5; color: white; }
+
+/* Card da tela pública (só botão + resultado) */
+.card-sorteio-publico {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+}
+
 /* Abas */
 .abas {
   display: flex;
@@ -170,49 +196,4 @@ header h1 { font-size: 1.6rem; color: #1a1a2e; }
 .tabela-historico td {
   padding: 0.5rem;
   border-bottom: 1px solid #f3f4f6;
-}
-/* Sub-abas (dentro da aba Sortear) */
-.sub-abas {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1.25rem;
-}
-
-.sub-aba {
-  background: #e0e7ff;
-  border: none;
-  padding: 0.5rem 1.1rem;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: #3730a3;
-  cursor: pointer;
-}
-.sub-aba:hover { background: #c7d2fe; }
-.sub-aba.ativa { background: #4f46e5; color: white; }
-
-/* Card da tela pública (só botão + resultado) */
-.card-sorteio-publico {
-  text-align: center;
-  padding: 2.5rem 1.5rem;
-}
-
-/* Contagem regressiva do sorteio */
-.contagem-regressiva {
-  margin-top: 1.5rem;
-  display: flex;
-  justify-content: center;
-}
-
-.numero-contagem {
-  font-size: 3.5rem;
-  font-weight: 700;
-  color: #4f46e5;
-  animation: contagem-pulso 1s ease-out;
-}
-
-@keyframes contagem-pulso {
-  0% { transform: scale(1.6); opacity: 0; }
-  30% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(1); opacity: 1; }
 }

@@ -10,10 +10,8 @@ import { Aluno } from '../models/aluno';
 @Injectable({
   providedIn: 'root'
 })
-
-
 export class AlunoService {
-  private apiUrl = 'https://aleatorizador-de-nomes-backend.onrender.com/api/alunos';
+  private apiUrl = 'http://localhost:3000/api/alunos';
 
   constructor(private http: HttpClient) {}
 

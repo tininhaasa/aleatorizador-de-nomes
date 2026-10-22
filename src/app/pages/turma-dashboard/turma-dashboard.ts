@@ -24,8 +24,8 @@ import { Aluno } from '../../models/aluno';
 import { StatusSorteio, ItemHistorico } from '../../models/sorteio';
 
 type Aba = 'sortear' | 'alunos' | 'historico';
-
 type SubAbaSortear = 'sorteio' | 'controle';
+
 @Component({
   selector: 'app-turma-dashboard',
   imports: [CommonModule, FormsModule],
@@ -41,10 +41,8 @@ export class TurmaDashboard implements OnInit, OnDestroy {
   turmaId = signal<number>(0);
   turma = signal<Turma | null>(null);
   abaAtiva = signal<Aba>('sortear');
-// No topo do arquivo, junto com o type Aba:
+  subAbaSortear = signal<SubAbaSortear>('sorteio');
 
-// Junto com os outros signals:
-subAbaSortear = signal<SubAbaSortear>('sorteio');
   // ── Alunos ──────────────────────────────────────────────
   alunos = signal<Aluno[]>([]);
   novoNomeAluno = signal('');
@@ -53,8 +51,6 @@ subAbaSortear = signal<SubAbaSortear>('sorteio');
   ausentesSelecionados = signal<Set<number>>(new Set());
   resultadoSorteio = signal<{ sorteados: string[]; ciclo: number; reiniciado: boolean } | null>(null);
   statusFila = signal<StatusSorteio | null>(null);
-  contagemRegressiva = signal<number | null>(null);
-  private intervalContagem?: ReturnType<typeof setInterval>;
 
   // ── Histórico ───────────────────────────────────────────
   historico = signal<ItemHistorico[]>([]);
@@ -77,7 +73,6 @@ subAbaSortear = signal<SubAbaSortear>('sorteio');
 
   ngOnDestroy(): void {
     this.paramSub?.unsubscribe();
-    if (this.intervalContagem) clearInterval(this.intervalContagem);
   }
 
   mudarAba(aba: Aba): void {
@@ -107,25 +102,16 @@ subAbaSortear = signal<SubAbaSortear>('sorteio');
   }
 
   adicionarAluno(): void {
-    const entrada = this.novoNomeAluno().trim();
-    if (!entrada) return;
+    const nome = this.novoNomeAluno().trim();
+    if (!nome) return;
 
-    const nomes = entrada.split(',').map(n => n.trim()).filter(n => n.length > 0);
-    if (nomes.length === 0) return;
-
-    let adicionados = 0;
-    nomes.forEach(nome => {
-      this.alunoService.criar(nome, this.turmaId()).subscribe({
-        next: () => {
-          adicionados++;
-          if (adicionados === nomes.length) {
-            this.novoNomeAluno.set('');
-            this.carregarAlunos();
-            this.carregarStatus();
-          }
-        },
-        error: () => this.erro.set('Erro ao adicionar aluno.'),
-      });
+    this.alunoService.criar(nome, this.turmaId()).subscribe({
+      next: () => {
+        this.novoNomeAluno.set('');
+        this.carregarAlunos();
+        this.carregarStatus();
+      },
+      error: () => this.erro.set('Erro ao adicionar aluno.'),
     });
   }
 
@@ -154,24 +140,7 @@ subAbaSortear = signal<SubAbaSortear>('sorteio');
     return this.ausentesSelecionados().has(id);
   }
 
-  iniciarSorteio(): void {
-    this.erro.set('');
-    this.resultadoSorteio.set(null);
-    this.contagemRegressiva.set(5);
-
-    this.intervalContagem = setInterval(() => {
-      const atual = this.contagemRegressiva();
-      if (atual === null || atual <= 1) {
-        clearInterval(this.intervalContagem);
-        this.contagemRegressiva.set(null);
-        this.realizarSorteio();
-        return;
-      }
-      this.contagemRegressiva.set(atual - 1);
-    }, 1000);
-  }
-
-  private realizarSorteio(): void {
+  realizarSorteio(): void {
     this.erro.set('');
     this.resultadoSorteio.set(null);
     const ausentes = Array.from(this.ausentesSelecionados());

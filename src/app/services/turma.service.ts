@@ -7,7 +7,7 @@ import { Turma } from '../models/turma';
   providedIn: 'root'
 })
 export class TurmaService {
-  private apiUrl = 'https://aleatorizador-de-nomes-backend.onrender.com/api/turmas';
+  private apiUrl = 'http://localhost:3000/api/turmas';
 
   // Mesma ideia do CursoService: sinaliza mudanças para quem observa (ex.: Sidebar)
   versao = signal(0);

@@ -1,5 +1,8 @@
-<app-sidebar></app-sidebar>
-
-<main class="conteudo">
+@if (authService.estaLogado()) {
+  <app-sidebar></app-sidebar>
+  <main class="conteudo">
+    <router-outlet></router-outlet>
+  </main>
+} @else {
   <router-outlet></router-outlet>
-</main>
+}

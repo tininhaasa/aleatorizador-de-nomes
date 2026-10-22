@@ -1,0 +1,70 @@
+.container { max-width: 700px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+header { margin-bottom: 1.25rem; }
+header h1 { font-size: 1.6rem; color: #1a1a2e; }
+.subtitulo { color: #666; margin-top: 0.3rem; font-size: 0.9rem; }
+
+.alerta-erro {
+  background: #fee2e2; border: 1px solid #f87171; color: #b91c1c;
+  padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.alerta-erro button { background: none; border: none; cursor: pointer; color: #b91c1c; }
+
+.alerta-sucesso {
+  background: #ecfdf5; border: 1px solid #6ee7b7; color: #047857;
+  padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1rem;
+}
+
+.card {
+  background: white; padding: 1.5rem; border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 1.5rem;
+}
+.card h2 { font-size: 1.1rem; color: #1a1a2e; margin-bottom: 1rem; }
+.vazio { color: #9ca3af; text-align: center; padding: 1rem 0; }
+
+.grade-form {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0.875rem; margin-bottom: 1rem;
+}
+
+.campo label {
+  display: block; font-size: 0.8rem; font-weight: 500;
+  color: #374151; margin-bottom: 0.3rem;
+}
+
+.input-texto {
+  width: 100%; padding: 0.55rem 0.75rem; border: 2px solid #e2e8f0;
+  border-radius: 8px; font-size: 0.9rem; outline: none; box-sizing: border-box;
+}
+.input-texto:focus { border-color: #6366f1; }
+
+.btn {
+  padding: 0.6rem 1.1rem; border: none; border-radius: 8px;
+  font-size: 0.875rem; cursor: pointer; font-weight: 500;
+}
+.btn:hover { opacity: 0.85; }
+.btn-primario { background: #6366f1; color: white; }
+.btn-perigo   { background: #ef4444; color: white; }
+.btn-sucesso  { background: #10b981; color: white; }
+.btn-pequeno  { padding: 0.35rem 0.75rem; font-size: 0.8rem; }
+
+.lista-usuarios { display: flex; flex-direction: column; gap: 0.625rem; }
+
+.usuario-card {
+  display: flex; justify-content: space-between; align-items: center;
+  background: #f9fafb; padding: 0.75rem 1rem; border-radius: 8px;
+}
+.usuario-card.inativo { opacity: 0.5; }
+
+.usuario-info { display: flex; flex-direction: column; gap: 0.15rem; }
+.usuario-nome { font-weight: 500; font-size: 0.95rem; }
+.usuario-email { font-size: 0.8rem; color: #6b7280; }
+
+.usuario-acoes { display: flex; align-items: center; gap: 0.5rem; }
+
+.badge {
+  font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px;
+  background: #e0e7ff; color: #3730a3; font-weight: 500;
+}
+.badge-admin { background: #fef3c7; color: #92400e; }

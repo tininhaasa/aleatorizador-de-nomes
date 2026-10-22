@@ -1,0 +1,74 @@
+<div class="container">
+  <header>
+    <h1>👤 Gestão de Professores</h1>
+    <p class="subtitulo">Crie e gerencie os logins dos professores.</p>
+  </header>
+
+  @if (erro()) {
+    <div class="alerta-erro">⚠️ {{ erro() }} <button (click)="erro.set('')">✕</button></div>
+  }
+  @if (sucesso()) {
+    <div class="alerta-sucesso">✅ {{ sucesso() }}</div>
+  }
+
+  <!-- ── Formulário de criação ── -->
+  <section class="card">
+    <h2>➕ Novo usuário</h2>
+
+    <div class="grade-form">
+      <div class="campo">
+        <label>Nome</label>
+        <input type="text" class="input-texto" placeholder="Maria Silva"
+          [value]="novoNome()" (input)="novoNome.set($any($event.target).value)" />
+      </div>
+      <div class="campo">
+        <label>Email</label>
+        <input type="email" class="input-texto" placeholder="maria@escola.com"
+          [value]="novoEmail()" (input)="novoEmail.set($any($event.target).value)" />
+      </div>
+      <div class="campo">
+        <label>Senha inicial</label>
+        <input type="password" class="input-texto" placeholder="Mín. 6 caracteres"
+          [value]="novaSenha()" (input)="novaSenha.set($any($event.target).value)" />
+      </div>
+      <div class="campo">
+        <label>Perfil</label>
+        <select class="input-texto"
+          [value]="novoRole()"
+          (change)="novoRole.set($any($event.target).value)">
+          <option value="professor">Professor</option>
+          <option value="admin">Administrador</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn btn-primario" (click)="criar()">Criar usuário</button>
+  </section>
+
+  <!-- ── Lista de usuários ── -->
+  <section class="card">
+    <h2>📋 Usuários cadastrados</h2>
+
+    @if (usuarios().length === 0) {
+      <p class="vazio">Nenhum usuário cadastrado ainda.</p>
+    } @else {
+      <div class="lista-usuarios">
+        @for (u of usuarios(); track u.id) {
+          <div class="usuario-card" [class.inativo]="!u.ativo">
+            <div class="usuario-info">
+              <span class="usuario-nome">{{ u.nome }}</span>
+              <span class="usuario-email">{{ u.email }}</span>
+            </div>
+            <div class="usuario-acoes">
+              <span class="badge" [class.badge-admin]="u.role === 'admin'">{{ u.role }}</span>
+              <button class="btn btn-pequeno" [class.btn-perigo]="u.ativo" [class.btn-sucesso]="!u.ativo"
+                (click)="alternarAtivo(u)">
+                {{ u.ativo ? 'Desativar' : 'Reativar' }}
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </section>
+</div>

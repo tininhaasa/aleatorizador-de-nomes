@@ -18,6 +18,13 @@
 .sidebar-header h1 {
   font-size: 1.2rem;
   color: white;
+  margin: 0;
+}
+
+.usuario-logado {
+  font-size: 0.775rem;
+  color: #818cf8;
+  margin: 0.25rem 0 0;
 }
 
 .link-gerenciar {
@@ -61,3 +68,21 @@
   color: #6b7280;
   padding: 0.25rem 0.75rem;
 }
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 1rem 1.25rem;
+  border-top: 1px solid #2d2d4a;
+}
+
+.btn-logout {
+  width: 100%;
+  background: none;
+  border: 1px solid #4b5563;
+  color: #9ca3af;
+  padding: 0.5rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+.btn-logout:hover { background: #25253f; color: white; }

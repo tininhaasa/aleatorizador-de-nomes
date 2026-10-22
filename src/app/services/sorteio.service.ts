@@ -11,7 +11,7 @@ import { ResultadoSorteio, StatusSorteio, ItemHistorico } from '../models/sortei
   providedIn: 'root'
 })
 export class SorteioService {
-  private apiUrl = 'https://aleatorizador-de-nomes-backend.onrender.com/api/sorteio';
+  private apiUrl = 'http://localhost:3000/api/sorteio';
 
   constructor(private http: HttpClient) {}
 

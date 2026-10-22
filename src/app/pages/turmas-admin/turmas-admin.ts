@@ -97,9 +97,4 @@ export class TurmasAdmin {
       error: () => this.erro.set('Erro ao remover turma.'),
     });
   }
-
-  trocadeCurso(cursoId: number): void {
-    console.log('Curso selecionadAo:', cursoId);
-    this.cursoSelecionadoId.set(cursoId);
-  }
 }

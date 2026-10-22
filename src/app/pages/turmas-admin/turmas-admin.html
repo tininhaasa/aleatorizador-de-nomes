@@ -47,11 +47,10 @@
     <div class="input-grupo">
       <select
         [value]="cursoSelecionadoId()"
-        (change)="trocadeCurso($any($event.target).value)"
-        (load)="trocadeCurso($any($event.target).value)"
+        (change)="cursoSelecionadoId.set(+$any($event.target).value)"
         class="input-texto"
       >
-        <option [value]="null" readonly selected>Selecione um curso...</option>
+        <option [value]="null" disabled selected>Selecione um curso...</option>
         @for (curso of cursos(); track curso.id) {
           <option [value]="curso.id">{{ curso.nome }}</option>
         }

@@ -1,0 +1,44 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    <div class="logo">🧹</div>
+    <h1>Sorteador de Limpeza</h1>
+    <p class="subtitulo">Entre com suas credenciais de professor</p>
+
+    @if (erro()) {
+      <div class="alerta-erro">⚠️ {{ erro() }}</div>
+    }
+
+    <form (ngSubmit)="entrar()">
+      <div class="campo">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          [value]="email()"
+          (input)="email.set($any($event.target).value)"
+          placeholder="professor@escola.com"
+          class="input-texto"
+          autocomplete="email"
+        />
+      </div>
+
+      <div class="campo">
+        <label for="senha">Senha</label>
+        <input
+          id="senha"
+          type="password"
+          [value]="senha()"
+          (input)="senha.set($any($event.target).value)"
+          placeholder="••••••••"
+          class="input-texto"
+          (keyup.enter)="entrar()"
+          autocomplete="current-password"
+        />
+      </div>
+
+      <button type="submit" class="btn-entrar" [disabled]="carregando()">
+        {{ carregando() ? 'Entrando...' : 'Entrar' }}
+      </button>
+    </form>
+  </div>
+</div>

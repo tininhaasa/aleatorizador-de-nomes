@@ -5,15 +5,21 @@
 // app.html SEM recarregar a página. Cada objeto abaixo mapeia
 // um caminho de URL para um componente.
 //
-// ':id' em 'turma/:id' é um PARÂMETRO DE ROTA — o componente lê
-// esse valor via ActivatedRoute (veja turma-dashboard.ts).
+// canActivate: [authGuard] protege a rota — se o usuário não
+// estiver logado, é redirecionado para /login automaticamente.
 // ============================================================
 
 import { Routes } from '@angular/router';
-import { TurmasAdmin } from './pages/turmas-admin/turmas-admin';
+import { TurmasAdmin }    from './pages/turmas-admin/turmas-admin';
 import { TurmaDashboard } from './pages/turma-dashboard/turma-dashboard';
+import { Login }          from './pages/login/login';
+import { UsuariosAdmin }  from './pages/usuarios-admin/usuarios-admin';
+import { authGuard }      from './guards/auth.guard';
 
 export const routes: Routes = [
-  { path: '', component: TurmasAdmin },
-  { path: 'turma/:id', component: TurmaDashboard },
+  { path: 'login', component: Login },
+  { path: '',           component: TurmasAdmin,    canActivate: [authGuard] },
+  { path: 'turma/:id',  component: TurmaDashboard, canActivate: [authGuard] },
+  { path: 'usuarios',   component: UsuariosAdmin,  canActivate: [authGuard] },
+  { path: '**', redirectTo: '' },
 ];
